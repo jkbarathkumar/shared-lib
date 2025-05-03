@@ -1,10 +1,13 @@
-def call(String goals = 'clean install') {
+def call(Map config = [:]) {
+    def mvnCmd = config.get('mavenCmd', 'mvn clean install')
+
     pipeline {
         agent any
         stages {
-            stage('Maven Build') {
+            stage('Build') {
                 steps {
-                    sh "mvn ${goals}"
+                    echo "Running Maven Command: ${mvnCmd}"
+                    sh mvnCmd
                 }
             }
         }
